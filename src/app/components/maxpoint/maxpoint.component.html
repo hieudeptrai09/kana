@@ -1,0 +1,66 @@
+<div class="row justify-content-evenly my-3">
+  <select
+    class="col-2 btn btn-secondary rounded-sm"
+    [(ngModel)]="question"
+    (change)="inputDirty()"
+  >
+    <option disabled>Câu hỏi</option>
+    <option *ngFor="let question of questions">{{ question }}</option>
+  </select>
+  <select
+    class="col-2 btn btn-success rounded-sm"
+    [(ngModel)]="answer"
+    (change)="inputDirty()"
+  >
+    <option disabled>Câu trả lời</option>
+    <option *ngFor="let answer of answers">{{ answer }}</option>
+  </select>
+  <select
+    class="col-2 btn btn-warning rounded-sm"
+    [(ngModel)]="questionType"
+    (change)="inputDirty()"
+  >
+    <option disabled>Cách trả lời</option>
+    <option *ngFor="let type of questionTypes" [value]="type">
+      {{ type | questype }}
+    </option>
+  </select>
+  <select
+    class="col-2 btn btn-danger rounded-sm"
+    [(ngModel)]="isDeducted"
+    (change)="inputDirty()"
+  >
+    <option disabled>Trả lời đến khi đúng?</option>
+    <option *ngFor="let isDeducted of deducted">{{ isDeducted }}</option>
+  </select>
+</div>
+<div class="row my-3 justify-content-center">
+  <button class="col-4 btn btn-primary rounded-pill" (click)="showPoint()">
+    Hiện bảng xếp hạng
+  </button>
+</div>
+
+<div *ngIf="tablelength > 0" class="row justify-content-center">
+  <div class="table-responsive col-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="border">Điểm</th>
+          <th class="border">Thời gian</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of table">
+          <td class="border">{{ record.point }}</td>
+          <td class="border">
+            {{ record.time | date : "dd/MM/yyyy HH:mm" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="tablelength === 0">
+  <p class="text-center text-danger">Hiện không có bảng xếp hạng ở mode này</p>
+</div>

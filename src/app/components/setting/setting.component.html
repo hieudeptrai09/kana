@@ -1,0 +1,77 @@
+<p class="h3 border-bottom text-center mt-5 pb-3">Cài đặt</p>
+<div class="row flex-column align-items-center">
+  <div class="col-6 mb-2">
+    <div class="row justify-content-between">
+      <label class="col-3">Câu hỏi</label>
+      <select class="col-3 btn-primary rounded-pill" [(ngModel)]="question">
+        <option *ngFor="let question of questions">{{ question }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 mb-2">
+    <div class="row justify-content-between">
+      <label class="col-3">Câu trả lời</label>
+      <select class="col-3 btn-primary rounded-pill" [(ngModel)]="answer">
+        <option *ngFor="let answer of answers">{{ answer }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 mb-2">
+    <div class="row justify-content-between">
+      <label class="col-3">Cách trả lời</label>
+      <select class="col-3 btn-primary rounded-pill" [(ngModel)]="questionType">
+        <option *ngFor="let type of questionTypes" [value]="type">
+          {{ type | questype }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 mb-2">
+    <input
+      type="checkbox"
+      [checked]="isDeducted"
+      (change)="isDeducted = !isDeducted"
+    />
+    <span class="ml-1">Trả lời đến khi đúng?</span>
+  </div>
+  <div class="col-6 mb-2" *ngIf="questionType !== 'c'">
+    <input
+      type="checkbox"
+      [checked]="isJsound"
+      (change)="isJsound = !isJsound"
+    />
+    <span class="ml-1">Có âm ghép không?</span>
+  </div>
+  <div class="col-6 mb-2">
+    <div class="row justify-content-between">
+      <label class="col-4">Số câu hỏi một lượt</label>
+      <select class="col-3 btn-primary rounded-pill" [(ngModel)]="noQuestions">
+        <option *ngFor="let number of noQuestionsPerTurn">
+          {{ number }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 mb-2" *ngIf="questionType === 'tn'">
+    <div class="row justify-content-between">
+      <label class="col-4">Số đáp án trắc nghiệm</label>
+      <select class="col-3 btn-primary rounded-pill" [(ngModel)]="choices">
+        <option *ngFor="let number of choicesNo">{{ number }}</option>
+      </select>
+    </div>
+  </div>
+  <button class="btn btn-success rounded-pill" (click)="save(popupTemplate)">
+    Lưu cài đặt
+  </button>
+  <ng-template #popupTemplate let-modal>
+    <div class="modal-body popup d-flex justify-content-center flex-column">
+      <p class="text-center">{{ message }}</p>
+      <button
+        class="btn-sm btn-primary rounded-sm d-block mx-auto col-2"
+        (click)="modal.dismiss('Cross click')"
+      >
+        OK
+      </button>
+    </div>
+  </ng-template>
+</div>
