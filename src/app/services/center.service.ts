@@ -158,6 +158,7 @@ export class CenterService {
           let length =
             prevChoice === 45 && this.length === 134 ? 102 : this.length;
           let choice = Math.floor(Math.random() * length);
+          prevChoice = choice;
           let isHiragana = Math.floor(Math.random());
           ques += isHiragana ? data[choice].hiragana : data[choice].katakana;
           ans += data[choice].romaji;
@@ -167,6 +168,7 @@ export class CenterService {
           let length =
             prevChoice === 45 && this.length === 134 ? 102 : this.length;
           let choice = Math.floor(Math.random() * length);
+          prevChoice = choice;
           ques += data[choice][question];
           ans += data[choice][answer];
         }
