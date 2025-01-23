@@ -152,16 +152,21 @@ export class CenterService {
       let noChars = Math.floor(Math.random() * 7) + 4;
       let ques = '';
       let ans = '';
+      let prevChoice = 0;
       if (question === 'kana') {
         for (let i = 0; i < noChars; i++) {
-          let choice = Math.floor(Math.random() * this.length);
+          let length =
+            prevChoice === 45 && this.length === 134 ? 102 : this.length;
+          let choice = Math.floor(Math.random() * length);
           let isHiragana = Math.floor(Math.random());
           ques += isHiragana ? data[choice].hiragana : data[choice].katakana;
           ans += data[choice].romaji;
         }
       } else {
         for (let i = 0; i < noChars; i++) {
-          let choice = Math.floor(Math.random() * this.length);
+          let length =
+            prevChoice === 45 && this.length === 134 ? 102 : this.length;
+          let choice = Math.floor(Math.random() * length);
           ques += data[choice][question];
           ans += data[choice][answer];
         }
