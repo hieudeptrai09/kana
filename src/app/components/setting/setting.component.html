@@ -27,20 +27,22 @@
     </div>
   </div>
   <div class="col-6 mb-2">
+    <div class="row justify-content-between">
+      <label class="col-3">Giới hạn</label>
+      <select class="col-3 btn-primary rounded-pill" [(ngModel)]="limit">
+        <option *ngFor="let type of limitList" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="col-6 mb-2">
     <input
       type="checkbox"
       [checked]="isDeducted"
       (change)="isDeducted = !isDeducted"
     />
     <span class="ml-1">Trả lời đến khi đúng?</span>
-  </div>
-  <div class="col-6 mb-2" *ngIf="questionType !== 'c'">
-    <input
-      type="checkbox"
-      [checked]="isJsound"
-      (change)="isJsound = !isJsound"
-    />
-    <span class="ml-1">Có âm ghép không?</span>
   </div>
   <div class="col-6 mb-2">
     <div class="row justify-content-between">

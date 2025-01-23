@@ -15,7 +15,7 @@ import { CenterService } from 'src/app/services/center.service';
 })
 export class MaxpointComponent implements OnInit {
   question: LetterType = 'hiragana';
-  answer: LetterType = 'latin';
+  answer: LetterType = 'romaji';
   questionType: QuestionType = 'tn';
   isDeducted: boolean = false;
 

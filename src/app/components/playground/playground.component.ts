@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Question, Setting } from 'src/app/models/center.model';
+import { limitType, Question, Setting } from 'src/app/models/center.model';
 import { CenterService } from 'src/app/services/center.service';
 
 @Component({
@@ -27,17 +27,16 @@ export class PlaygroundComponent implements OnInit {
       this.setting.ques,
       this.setting.ans,
       this.setting.quesType,
-      this.setting.noAnswers,
-      this.setting.isJsound
+      this.setting.limit,
+      this.setting.noAnswers
     );
     this.questionPoint = this.getMaxPoint();
   }
 
   private getMaxPoint(): number {
     if (this.setting.quesType === 'tl') {
-      if (this.setting.isJsound) return 67;
-      return 46;
-    } else if (this.setting.quesType === 'c') return 0;
+      return this.service.getNoCharacter(this.setting.limit);
+    } else if (this.setting.quesType === 'c') return 10;
     else return this.setting.noAnswers - 1;
   }
 
@@ -47,8 +46,8 @@ export class PlaygroundComponent implements OnInit {
         this.setting.ques,
         this.setting.ans,
         this.setting.quesType,
-        this.setting.noAnswers,
-        this.setting.isJsound
+        this.setting.limit,
+        this.setting.noAnswers
       );
       this.successTl = undefined;
       this.successTn = [];
@@ -67,11 +66,13 @@ export class PlaygroundComponent implements OnInit {
       if (success) {
         this.isDisabled = true;
         this.point += this.questionPoint;
+        this.tlAnswer = '';
         this.getQuestion();
       } else --this.questionPoint;
     } else {
       if (success) this.point += this.questionPoint;
       this.isDisabled = true;
+      this.tlAnswer = '';
       this.getQuestion();
     }
   }

@@ -4,6 +4,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
+  Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CenterService } from '../services/center.service';
@@ -12,7 +13,7 @@ import { CenterService } from '../services/center.service';
   providedIn: 'root',
 })
 export class PlaygroundGuard implements CanActivate {
-  constructor(private centerService: CenterService) {}
+  constructor(private service: CenterService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -22,14 +23,18 @@ export class PlaygroundGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    let setting = this.centerService.getSetting();
-    return (
-      Boolean(setting.ans) &&
-      setting.isDeducted !== null &&
-      Boolean(setting.noAnswers) &&
-      Boolean(setting.noQuestions) &&
-      Boolean(setting.ques) &&
-      Boolean(setting.quesType)
-    );
+    let result = this.service.haveSet();
+    if (!result) {
+      this.service.saveSetting({
+        ques: 'hiragana',
+        ans: 'romaji',
+        quesType: 'tn',
+        noQuestions: 10,
+        noAnswers: 4,
+        isDeducted: false,
+        limit: 'âm cơ bản',
+      });
+    }
+    return true;
   }
 }

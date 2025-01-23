@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   LetterType,
+  LimitType,
   QuestionType,
   letterType,
+  limitType,
   questionType,
 } from 'src/app/models/center.model';
 import { CenterService } from 'src/app/services/center.service';
@@ -17,34 +19,36 @@ export class SettingComponent implements OnInit {
   question: LetterType;
   answer: LetterType;
   questionType: QuestionType;
+  limit: LimitType;
   choices: number;
   noQuestions: number;
   isDeducted: boolean;
-  isJsound: boolean;
 
   questions: LetterType[];
   answers: LetterType[];
   questionTypes: QuestionType[];
+  limitList: LimitType[];
   choicesNo: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
   noQuestionsPerTurn: number[] = [10, 15, 20, 25, 30];
 
-  message: string = 'meow';
+  message: string = '';
 
   constructor(private service: CenterService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     let setting = this.service.getSetting();
     this.question = setting.ques || 'hiragana';
-    this.answer = setting.ans || 'latin';
+    this.answer = setting.ans || 'romaji';
     this.questionType = setting.quesType || 'tn';
     this.choices = setting.noAnswers || 4;
     this.noQuestions = setting.noQuestions || 10;
     this.isDeducted = setting.isDeducted || false;
-    this.isJsound = setting.isJsound || false;
+    this.limit = setting.limit || 'âm ngắt';
 
     this.questions = [...letterType];
     this.answers = [...letterType];
     this.questionTypes = [...questionType];
+    this.limitList = [...limitType];
   }
 
   save(popupTemplate) {
@@ -54,7 +58,8 @@ export class SettingComponent implements OnInit {
       this.questionType === undefined ||
       (this.questionType === 'tn' && this.choices === undefined) ||
       this.isDeducted === undefined ||
-      this.noQuestions === undefined
+      this.noQuestions === undefined ||
+      this.limit === undefined
     ) {
       this.message = 'Cần phải chọn đủ các mục cài đặt';
       this.openPopup(popupTemplate);
@@ -67,16 +72,16 @@ export class SettingComponent implements OnInit {
       return;
     }
 
-    if (this.question === 'kana' && this.answer !== 'latin') {
+    if (this.question === 'kana' && this.answer !== 'romaji') {
       this.message =
-        'Chỉ được chọn câu trả lời thuộc loại latin khi câu hỏi thuộc loại kana';
+        'Chỉ được chọn câu trả lời thuộc loại romaji khi câu hỏi thuộc loại kana';
       this.openPopup(popupTemplate);
       return;
     }
 
-    if (this.answer === 'kana' && this.question !== 'latin') {
+    if (this.answer === 'kana' && this.question !== 'romaji') {
       this.message =
-        'Chỉ được chọn câu hỏi thuộc loại latin khi câu trả lời thuộc loại kana';
+        'Chỉ được chọn câu hỏi thuộc loại romaji khi câu trả lời thuộc loại kana';
       this.openPopup(popupTemplate);
       return;
     }
@@ -88,9 +93,9 @@ export class SettingComponent implements OnInit {
       return;
     }
 
-    if (this.question === 'latin' && this.questionType === 'c') {
+    if (this.question === 'romaji' && this.questionType === 'c') {
       this.message =
-        'Không được chọn câu hỏi thuộc loại latin ở dạng ghép chuỗi';
+        'Không được chọn câu hỏi thuộc loại romaji ở dạng ghép chuỗi';
       this.openPopup(popupTemplate);
       return;
     }
@@ -100,9 +105,9 @@ export class SettingComponent implements OnInit {
       ans: this.answer,
       quesType: this.questionType,
       isDeducted: this.isDeducted,
-      isJsound: this.isJsound,
       noQuestions: this.noQuestions,
       noAnswers: this.choices,
+      limit: this.limit,
     });
 
     this.message = 'Đã lưu thành công';
