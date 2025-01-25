@@ -36,8 +36,9 @@ export class PlaygroundComponent implements OnInit {
   private getMaxPoint(): number {
     if (this.setting.quesType === 'tl') {
       return this.service.getNoCharacter(this.setting.limit);
-    } else if (this.setting.quesType === 'c') return 10;
-    else return this.setting.noAnswers - 1;
+    }
+    if (this.setting.quesType === 'c') return 10;
+    return this.setting.noAnswers - 1;
   }
 
   private getQuestion() {
@@ -66,14 +67,14 @@ export class PlaygroundComponent implements OnInit {
       if (success) {
         this.isDisabled = true;
         this.point += this.questionPoint;
-        this.tlAnswer = '';
         this.getQuestion();
+        this.tlAnswer = '';
       } else --this.questionPoint;
     } else {
       if (success) this.point += this.questionPoint;
       this.isDisabled = true;
-      this.tlAnswer = '';
       this.getQuestion();
+      this.tlAnswer = '';
     }
   }
 
