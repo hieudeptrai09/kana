@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { default as data } from '../../assets/data/data';
 import {
+  BASIC_LENGTH,
+  CONVOWEL_LENGTH,
+  EXHAUSTED_LENGTH,
   LetterType,
   LimitType,
+  N_INDEX,
+  PALATALIZED_LENGTH,
   Question,
   QuestionType,
   Setting,
@@ -13,6 +18,7 @@ import {
 })
 export class CenterService {
   length: number;
+  point: number;
 
   constructor() {}
 
@@ -27,6 +33,14 @@ export class CenterService {
       if (value === array[i]) return true;
     }
     return false;
+  }
+
+  getPoint() {
+    return this.point;
+  }
+
+  setPoint(point: number) {
+    this.point = point;
   }
 
   getCode(
@@ -117,11 +131,13 @@ export class CenterService {
   getNoCharacter(limit: LimitType) {
     switch (limit) {
       case 'âm cơ bản':
-        return 46;
+        return BASIC_LENGTH;
       case 'âm đục':
-        return 71;
+        return CONVOWEL_LENGTH;
+      case 'âm ghép':
+        return PALATALIZED_LENGTH;
       case 'âm ngắt':
-        return 139;
+        return EXHAUSTED_LENGTH;
     }
   }
 
@@ -156,9 +172,15 @@ export class CenterService {
       if (question === 'kana') {
         for (let i = 0; i < noChars; i++) {
           let length =
-            prevChoice === 45 && this.length === 134 ? 102 : this.length;
-          let choice = Math.floor(Math.random() * length);
-          prevChoice = choice;
+            (prevChoice === N_INDEX || i === 0) &&
+            this.length === EXHAUSTED_LENGTH
+              ? PALATALIZED_LENGTH
+              : this.length;
+          let choice = -1;
+          do {
+            choice = Math.floor(Math.random() * length);
+            prevChoice = choice;
+          } while (i === 0 && choice === N_INDEX);
           let isHiragana = Math.floor(Math.random());
           ques += isHiragana ? data[choice].hiragana : data[choice].katakana;
           ans += data[choice].romaji;
@@ -166,9 +188,15 @@ export class CenterService {
       } else {
         for (let i = 0; i < noChars; i++) {
           let length =
-            prevChoice === 45 && this.length === 134 ? 102 : this.length;
-          let choice = Math.floor(Math.random() * length);
-          prevChoice = choice;
+            (prevChoice === N_INDEX || i === 0) &&
+            this.length === EXHAUSTED_LENGTH
+              ? PALATALIZED_LENGTH
+              : this.length;
+          let choice = -1;
+          do {
+            choice = Math.floor(Math.random() * length);
+            prevChoice = choice;
+          } while (i === 0 && choice === N_INDEX);
           ques += data[choice][question];
           ans += data[choice][answer];
         }

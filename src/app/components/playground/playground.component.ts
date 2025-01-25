@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { limitType, Question, Setting } from 'src/app/models/center.model';
+import { Router } from '@angular/router';
+import { Question, Setting, TableRecord } from 'src/app/models/center.model';
 import { CenterService } from 'src/app/services/center.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class PlaygroundComponent implements OnInit {
   point: number = 0;
   questionPoint: number;
 
-  constructor(private service: CenterService) {}
+  constructor(private service: CenterService, private router: Router) {}
 
   ngOnInit(): void {
     this.setting = this.service.getSetting();
@@ -55,7 +56,11 @@ export class PlaygroundComponent implements OnInit {
       this.questionPoint = this.getMaxPoint();
       ++this.questionNumber;
       this.isDisabled = false;
-      if (this.questionNumber > this.setting.noQuestions) this.savePoint();
+      if (this.questionNumber > this.setting.noQuestions) {
+        this.savePoint();
+        this.service.setPoint(this.point);
+        this.router.navigate(['congratulation']);
+      }
     }, 2000);
   }
 
@@ -97,7 +102,7 @@ export class PlaygroundComponent implements OnInit {
         ])
       );
     } else {
-      let marksParse = JSON.parse(marks);
+      let marksParse: TableRecord[] = JSON.parse(marks);
       marksParse.push({
         point: (this.point / (this.questionNumber - 1)).toFixed(2),
         time: new Date().getTime(),
