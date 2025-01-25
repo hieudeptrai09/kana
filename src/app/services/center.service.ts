@@ -119,9 +119,9 @@ export class CenterService {
       case 'âm cơ bản':
         return 46;
       case 'âm đục':
-        return 69;
+        return 71;
       case 'âm ngắt':
-        return 134;
+        return 139;
     }
   }
 
@@ -191,7 +191,10 @@ export class CenterService {
           if (i !== ans) {
             do {
               choicesNo[i] = Math.floor(Math.random() * this.length);
-            } while (this.checkDuplicate(choicesNo, choicesNo[i], i, ans));
+            } while (
+              data[choicesNo[i]].romaji === data[choice].romaji ||
+              this.checkDuplicate(choicesNo, choicesNo[i], i, ans)
+            );
           }
         }
         for (let i = 0; i < noAnswer; i++)
@@ -214,7 +217,10 @@ export class CenterService {
           if (i !== ans) {
             do {
               choicesNo[i] = Math.floor(Math.random() * this.length);
-            } while (this.checkDuplicate(choicesNo, choicesNo[i], i, ans));
+            } while (
+              data[choicesNo[i]].romaji === data[choice].romaji ||
+              this.checkDuplicate(choicesNo, choicesNo[i], i, ans)
+            );
           }
         }
         for (let i = 0; i < noAnswer; i++) {
@@ -240,7 +246,10 @@ export class CenterService {
           if (i !== ans) {
             do {
               choicesNo[i] = Math.floor(Math.random() * this.length);
-            } while (this.checkDuplicate(choicesNo, choicesNo[i], i, ans));
+            } while (
+              data[choicesNo[i]][answer] === data[choice][answer] ||
+              this.checkDuplicate(choicesNo, choicesNo[i], i, ans)
+            );
           }
         }
         for (let i = 0; i < noAnswer; i++)
