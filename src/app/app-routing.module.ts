@@ -5,7 +5,6 @@ import { PlaygroundComponent } from './components/playground/playground.componen
 import { MaxpointComponent } from './components/maxpoint/maxpoint.component';
 import { SettingComponent } from './components/setting/setting.component';
 import { PlaygroundGuard } from './guards/playground.guard';
-import { CongratulationComponent } from './components/congratulation/congratulation.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,6 @@ const routes: Routes = [
   },
   { path: 'maxpoint', component: MaxpointComponent },
   { path: 'setting', component: SettingComponent },
-  { path: 'congratulation', component: CongratulationComponent },
   { path: '', component: HomeComponent },
 ];
 

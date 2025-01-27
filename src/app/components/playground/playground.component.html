@@ -1,76 +1,102 @@
-<div class="position-absolute left-center">
-  <p
-    class="bg-danger text-white cc text-center h6 rounded-sm position-relative z1"
-  >
-    Câu số:
-  </p>
-  <p
-    class="bg-warning rounded-circle text-white appendix h1 d-flex align-items-center justify-content-center"
-  >
-    {{ questionNumber }}
-  </p>
-</div>
+<div
+  *ngIf="
+    questionNumber > setting.noQuestions;
+    then congratulation;
+    else playground
+  "
+></div>
 
-<div class="position-absolute right-center">
-  <p
-    class="bg-danger text-white cc text-center h6 rounded-sm position-relative z1"
-  >
-    Điểm số:
-  </p>
-  <p
-    class="bg-warning rounded-circle text-white appendix h1 d-flex align-items-center justify-content-center"
-  >
-    {{ point }}
-  </p>
-</div>
-
-<div class="row question d-flex align-items-center">
-  <p class="col-12 h1 text-center">{{ question.ques }}</p>
-</div>
-
-<div *ngIf="setting.quesType !== 'tn'; then tl; else tn"></div>
-
-<ng-template #tl>
-  <form class="row flex-column align-items-center">
-    <input
-      name="answer"
-      class="col-3 mb-3 text-center form-control"
-      [(ngModel)]="tlAnswer"
-      [disabled]="isDisabled"
-      [placeholder]="this.setting.ans"
-    />
-    <button
-      class="col-3 btn btn-primary rounded-pill"
-      (click)="submit(tlAnswer)"
-      [ngClass]="{
-        'btn-danger': successTl === false,
-        'btn-success': successTl === true,
-        'btn-primary': successTl === undefined
-      }"
-      [disabled]="isDisabled"
+<ng-template #playground>
+  <div class="position-absolute left-center">
+    <p
+      class="bg-danger text-white cc text-center h6 rounded-sm position-relative z1"
     >
-      Trả lời
-    </button>
-  </form>
-</ng-template>
+      Câu số:
+    </p>
+    <p
+      class="bg-warning rounded-circle text-white appendix h1 d-flex align-items-center justify-content-center"
+    >
+      {{ questionNumber }}
+    </p>
+  </div>
 
-<ng-template #tn>
-  <div class="row justify-content-center">
-    <div class="col-6" *ngFor="let choice of question.choices; let i = index">
-      <div class="row justify-content-center">
-        <button
-          class="btn rounded-pill col-4 mb-4"
-          (click)="submit(i)"
-          [ngClass]="{
-            'btn-danger': successTn[i] === false,
-            'btn-success': successTn[i] === true,
-            'bg-white border border-dark': successTn[i] === undefined
-          }"
-          [disabled]="isDisabled"
-        >
-          {{ choice }}
-        </button>
+  <div class="position-absolute right-center">
+    <p
+      class="bg-danger text-white cc text-center h6 rounded-sm position-relative z1"
+    >
+      Điểm số:
+    </p>
+    <p
+      class="bg-warning rounded-circle text-white appendix h1 d-flex align-items-center justify-content-center"
+    >
+      {{ point }}
+    </p>
+  </div>
+
+  <div class="row question d-flex align-items-center">
+    <p class="col-12 h1 text-center">{{ question.ques }}</p>
+  </div>
+
+  <div *ngIf="setting.quesType !== 'tn'; then tl; else tn"></div>
+
+  <ng-template #tl>
+    <form class="row flex-column align-items-center">
+      <input
+        name="answer"
+        class="col-3 mb-3 text-center form-control"
+        [(ngModel)]="tlAnswer"
+        [disabled]="isDisabled"
+        [placeholder]="this.setting.ans"
+      />
+      <button
+        class="col-3 btn btn-primary rounded-pill"
+        (click)="submit(tlAnswer)"
+        [ngClass]="{
+          'btn-danger': successTl === false,
+          'btn-success': successTl === true,
+          'btn-primary': successTl === undefined
+        }"
+        [disabled]="isDisabled"
+      >
+        Trả lời
+      </button>
+    </form>
+  </ng-template>
+
+  <ng-template #tn>
+    <div class="row justify-content-center">
+      <div class="col-6" *ngFor="let choice of question.choices; let i = index">
+        <div class="row justify-content-center">
+          <button
+            class="btn rounded-pill col-4 mb-4"
+            (click)="submit(i)"
+            [ngClass]="{
+              'btn-danger': successTn[i] === false,
+              'btn-success': successTn[i] === true,
+              'bg-white border border-dark': successTn[i] === undefined
+            }"
+            [disabled]="isDisabled"
+          >
+            {{ choice }}
+          </button>
+        </div>
       </div>
     </div>
+  </ng-template>
+</ng-template>
+
+<ng-template #congratulation>
+  <img
+    src="../../../assets/image/congratulation.png"
+    class="logo mx-auto d-block mt-5 mb-2"
+  />
+  <p class="h1 col-12 text-center mb-3">
+    Chúc mừng bạn đã giành được
+    <span class="text-success">{{ point }}</span> điểm
+  </p>
+  <div class="row justify-content-center">
+    <button class="btn btn-success col-2 rounded-pill" (click)="replay()">
+      Chơi lại
+    </button>
   </div>
 </ng-template>

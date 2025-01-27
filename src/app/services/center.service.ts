@@ -18,7 +18,6 @@ import {
 })
 export class CenterService {
   length: number;
-  point: number;
 
   constructor() {}
 
@@ -33,14 +32,6 @@ export class CenterService {
       if (value === array[i]) return true;
     }
     return false;
-  }
-
-  getPoint() {
-    return this.point;
-  }
-
-  setPoint(point: number) {
-    this.point = point;
   }
 
   getCode(

@@ -58,8 +58,6 @@ export class PlaygroundComponent implements OnInit {
       this.isDisabled = false;
       if (this.questionNumber > this.setting.noQuestions) {
         this.savePoint();
-        this.service.setPoint(this.point);
-        this.router.navigate(['congratulation']);
       }
     }, 2000);
   }
@@ -117,5 +115,10 @@ export class PlaygroundComponent implements OnInit {
       marksParse.pop();
       localStorage.setItem(code, JSON.stringify(marksParse));
     }
+  }
+
+  replay() {
+    this.questionNumber = 1;
+    this.point = 0;
   }
 }

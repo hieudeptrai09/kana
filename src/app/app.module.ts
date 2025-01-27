@@ -7,7 +7,6 @@ import { SettingComponent } from './components/setting/setting.component';
 import { PlaygroundComponent } from './components/playground/playground.component';
 import { MaxpointComponent } from './components/maxpoint/maxpoint.component';
 import { HomeComponent } from './components/home/home.component';
-import { CongratulationComponent } from './components/congratulation/congratulation.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QuestypePipe } from './pipes/questype.pipe';
@@ -19,7 +18,6 @@ import { QuestypePipe } from './pipes/questype.pipe';
     PlaygroundComponent,
     MaxpointComponent,
     HomeComponent,
-    CongratulationComponent,
     QuestypePipe,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, NgbModule],
